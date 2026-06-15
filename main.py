@@ -102,4 +102,5 @@ def run_dummy_server():
 # 백그라운드에서 가짜 웹서버를 돌려 Render의 수면 차단 및 에러를 예방합니다.
 threading.Thread(target=run_dummy_server, daemon=True).start()
 
-bot.run('MTUxNTczOTUxMzAyMjg0NTEzOA.GUYNkg.6izzYuR98wahKoOdinIsfAOIc8w5R7xjZUsPdM')
+bot.run(os.environ.get('DISCORD_TOKEN'))
+
