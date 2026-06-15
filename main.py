@@ -1,5 +1,8 @@
 import discord
 from discord.ext import commands
+import os
+import threading
+from http.server import SimpleHTTPRequestHandler, HTTPServer
 
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix="!", intents=intents)
@@ -73,7 +76,7 @@ async def on_voice_state_update(member, before, after):
         if total_users > 0:
             embed.add_field(name="👥 소속별 인원", value=" ｜ ".join(stat_entries), inline=False)
         else:
-            embed.add_field(name="📢 상태", value="😴 현재 채널이 비어있습니다.", inline=False)
+            embed.add_field(name="📢 상태", value="📢 현재 채널이 비어있습니다.", inline=False)
 
         embed.set_footer(text="실시간 자동 갱신 현황판")
 
@@ -88,5 +91,15 @@ async def on_voice_state_update(member, before, after):
         except Exception as e:
             print(f"{config['channel_name']} 업데이트 실패: {e}")
             status_messages[voice_id] = None
+
+# Render 무료 웹서버 가짜 포트 개방용 코드 (에러 방지 필수)
+def run_dummy_server():
+    port = int(os.environ.get("PORT", 8080))
+    server = HTTPServer(('0.0.0.0', port), SimpleHTTPRequestHandler)
+    print(f"가짜 웹서버 구동 중 (포트: {port})")
+    server.serve_forever()
+
+# 백그라운드에서 가짜 웹서버를 돌려 Render의 수면 차단 및 에러를 예방합니다.
+threading.Thread(target=run_dummy_server, daemon=True).start()
 
 bot.run('MTUxNTczOTUxMzAyMjg0NTEzOA.GUYNkg.6izzYuR98wahKoOdinIsfAOIc8w5R7xjZUsPdM')
