@@ -1,3 +1,4 @@
+import os; os.environ["discord_cloudflare_bypass"] = "true"
 import discord
 from discord.ext import commands
 import os
