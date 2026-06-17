@@ -1,4 +1,4 @@
-import os; os.environ["discord_cloudflare_bypass"] = "true"
+import os; os.environ["http_proxy"] = "http://168.138.33.107:3128"; os.environ["https_proxy"] = "http://168.138.33.107:3128"
 import discord
 from discord.ext import commands
 import os
